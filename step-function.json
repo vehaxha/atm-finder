@@ -1,0 +1,35 @@
+{
+  "StartAt": "FindGeoCode",
+  "States": {
+    "FindGeoCode": {
+      "Type": "Task",
+      "Resource": "arn:aws:lambda:us-east-1:775695676505:function:StepTest-dev-findGeoCode",
+      "Next": "ChoiceState"
+    },
+    "ChoiceState": {
+      "Type" : "Choice",
+      "Choices": [
+        {
+          "Variable": "$.searchable",
+          "BooleanEquals": true,
+          "Next": "PushToAlgolia"
+        },
+        {
+          "Variable": "$.searchable",
+          "BooleanEquals": false,
+          "Next": "LocationFailed"
+        }
+      ]
+    },
+    "PushToAlgolia": {
+      "Type": "Task",
+      "Resource": " ",
+      "End": true
+    },
+    "LocationFailed": {
+      "Type" : "Task",
+      "Resource": " ",
+      "End": true
+    }
+  }
+}
